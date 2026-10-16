@@ -23,7 +23,6 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: var(--primary-pink); }
         ::-webkit-scrollbar-thumb { background: var(--accent-gold); border-radius: 10px; }
@@ -215,7 +214,7 @@
         .next-reason-btn:hover { background: var(--accent-gold-dark); transform: scale(1.05); }
 
         .all-reasons-container {
-            display: none; height: 500px; overflow-y: auto; background: var(--glass-bg);
+            height: 500px; overflow-y: auto; background: var(--glass-bg);
             border-radius: 30px; padding: 40px; border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow);
         }
         .reason-item {
@@ -236,9 +235,13 @@
         .envelope-container { width: 100%; max-width: 900px; perspective: 1000px; }
         .envelope {
             background: #fff; padding: 60px; border-radius: 20px;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.1); text-align: center; cursor: pointer;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.1); text-align: center;
             transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; border: 1px solid #f0f0f0;
         }
+        
+        .envelope:not(.open) { cursor: pointer; }
+        .envelope:not(.open):hover { transform: scale(1.02) translateY(-10px); box-shadow: 0 35px 70px rgba(0,0,0,0.15); }
+        
         .envelope::before {
             content: '\f004'; font-family: 'Font Awesome 5 Free'; font-weight: 900;
             position: absolute; top: -25px; left: 50%; transform: translateX(-50%);
@@ -246,7 +249,7 @@
             justify-content: center; align-items: center; font-size: 1.5rem; box-shadow: 0 5px 15px rgba(144, 12, 63, 0.4);
             border: 2px solid #5a0727; transition: 0.5s;
         }
-        .envelope:hover { transform: scale(1.03) rotateX(5deg); }
+        
         .envelope.open::before { opacity: 0; transform: translate(-50%, -50px) scale(0); }
         
         .letter-content {
@@ -255,7 +258,7 @@
         }
         
         .letter-heading {
-            font-family: 'Great Vibes', cursive; color: var(--accent-gold-dark); font-size: 3rem;
+            font-family: 'Great Vibes', cursive; color: var(--accent-gold-dark); font-size: 3.5rem;
             margin: 50px 0 20px 0; text-align: center; border-bottom: 2px solid rgba(212,175,55,0.2);
             padding-bottom: 10px;
         }
@@ -276,14 +279,28 @@
         }
         .letter-open-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 25px rgba(212, 175, 55, 0.5); }
 
-        /* --- THE ULTIMATE FINALE (CAKE & DUAS) --- */
+        /* --- THE ULTIMATE FINALE (CAKE & DUAS CROSSFADE) --- */
         .cake-section {
             min-height: 100vh; display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center;
             background: radial-gradient(circle, var(--text-dark) 0%, #111 100%);
             color: white; position: relative; overflow: hidden; padding: 50px 20px;
         }
-        .cake-content { z-index: 10; position: relative; transition: all 1s ease; }
+        
+        /* CSS Grid Container - Prevents absolute position clipping */
+        .cake-ui-container {
+            display: grid; grid-template-columns: 1fr; grid-template-areas: "overlap";
+            width: 100%; max-width: 800px; align-items: center; justify-items: center;
+        }
+        
+        .cake-title {
+            font-family: 'Great Vibes', cursive; font-size: 4.5rem; color: #fff; margin-bottom: 20px;
+        }
+        
+        .cake-content {
+            grid-area: overlap; z-index: 10; transition: opacity 1s ease;
+            display: flex; flex-direction: column; align-items: center; width: 100%;
+        }
         
         .cake-btn {
             background: transparent; border: 2px solid var(--accent-gold); color: var(--accent-gold);
@@ -292,21 +309,26 @@
         }
         .cake-btn:hover { background: var(--accent-gold); color: white; box-shadow: 0 0 30px rgba(212, 175, 55, 0.6); transform: scale(1.05); }
         
-        /* Dua Finale Styles */
+        /* Flawless Dua Celebration Styles */
         .dua-celebration {
-            display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 5; flex-direction: column; justify-content: center; align-items: center;
-            animation: fadeIn 2s ease forwards;
+            grid-area: overlap; z-index: 5; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; opacity: 0; pointer-events: none;
+            transition: opacity 2s ease; width: 100%;
         }
+        
+        .dua-title {
+            font-family: 'Great Vibes', cursive; font-size: 5rem; color: var(--primary-pink); 
+            margin-bottom: 30px; text-shadow: 0 0 20px rgba(252, 228, 236, 0.5);
+        }
+
         .dua-box {
             background: rgba(255,255,255,0.05); border: 1px solid rgba(212, 175, 55, 0.3);
-            padding: 50px; border-radius: 30px; max-width: 800px; backdrop-filter: blur(10px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            padding: 40px; border-radius: 30px; max-width: 800px; backdrop-filter: blur(10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); width: 100%; text-align: center;
         }
-        .dua-box p { font-family: 'Playfair Display', serif; font-size: 1.8rem; line-height: 1.8; color: #fff; margin-bottom: 20px; }
+        .dua-box p { font-family: 'Playfair Display', serif; font-size: 1.6rem; line-height: 1.8; color: #fff; margin-bottom: 20px; }
         .dua-box .ameen { font-family: 'Great Vibes', cursive; font-size: 4rem; color: var(--accent-gold); text-shadow: 0 0 20px rgba(212,175,55,0.6); margin-top: 20px; }
 
-        /* Floating Dua Words */
         .floating-word {
             position: absolute; font-family: 'Playfair Display', serif; color: rgba(212,175,55,0.3);
             font-size: 2rem; animation: floatWord 15s linear infinite; z-index: 1; pointer-events: none;
@@ -318,6 +340,35 @@
             100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
         }
 
+        /* --- THE SECRET VAULT (COUPONS) --- */
+        .coupons-section { padding: 100px 20px; max-width: 1000px; margin: 0 auto; text-align: center; }
+        .coupons-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; }
+        .coupon {
+            background: linear-gradient(135deg, #fff, #fef4f4); border: 2px dashed var(--accent-gold);
+            border-radius: 15px; padding: 30px; position: relative; box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+            transition: all 0.4s ease; cursor: pointer;
+        }
+        .coupon::before, .coupon::after {
+            content: ''; position: absolute; top: 50%; width: 30px; height: 30px; background: var(--primary-pink);
+            border-radius: 50%; transform: translateY(-50%); border: 2px dashed var(--accent-gold);
+        }
+        .coupon::before { left: -15px; border-left-color: transparent; }
+        .coupon::after { right: -15px; border-right-color: transparent; }
+        .coupon:hover { transform: translateY(-10px) rotate(2deg); box-shadow: 0 20px 40px rgba(212,175,55,0.2); }
+        .coupon i { font-size: 2.5rem; color: var(--accent-gold); margin-bottom: 15px; }
+        .coupon h4 { font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 600; text-transform: uppercase; margin-bottom: 10px; }
+        .coupon p { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--text-light); }
+
+        /* --- THE NEXT CHAPTER --- */
+        .next-chapter-section { background: #111; color: white; padding: 120px 20px; text-align: center; position: relative; }
+        .polaroid-container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 50px; }
+        .polaroid { background: white; padding: 15px 15px 50px 15px; box-shadow: 0 15px 40px rgba(0,0,0,0.5); width: 250px; transform: rotate(-5deg); transition: 0.5s; }
+        .polaroid:nth-child(even) { transform: rotate(5deg); margin-top: 30px; }
+        .polaroid:hover { transform: scale(1.05) rotate(0deg); z-index: 10; }
+        .polaroid-blank { background: #f0f0f0; width: 100%; height: 250px; display: flex; justify-content: center; align-items: center; border: 1px solid #ddd; }
+        .polaroid-blank i { font-size: 3rem; color: #ccc; }
+        .polaroid p { color: #333; font-family: 'Great Vibes', cursive; font-size: 1.8rem; margin-top: 15px; }
+
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
             .hero .subtitle { font-size: 2rem; }
@@ -328,8 +379,13 @@
             .reasons-controls { flex-direction: column; gap: 10px; }
             #single-reason-text { font-size: 1.5rem; }
             .letter-heading { font-size: 2.2rem; }
-            .dua-box p { font-size: 1.3rem; }
-            .dua-box { padding: 30px; }
+            
+            /* Responsive fixes for Dua Section */
+            .cake-title { font-size: 3rem; }
+            .dua-title { font-size: 3.2rem; margin-bottom: 15px; }
+            .dua-box { padding: 25px; }
+            .dua-box p { font-size: 1.15rem; line-height: 1.6; margin-bottom: 15px; }
+            .dua-box .ameen { font-size: 2.5rem; margin-top: 10px; }
         }
     </style>
 </head>
@@ -436,9 +492,9 @@
     <section class="letter-section">
         <h2 class="section-title reveal">A Secret Letter For You</h2>
         <div class="envelope-container reveal">
-            <div class="envelope" id="envelope">
+            <div class="envelope" id="envelope" onclick="openLetter(event)">
                 <h3 class="cursive" style="font-size: 3rem; margin-bottom: 10px;" id="letter-title">Tap to Break the Seal</h3>
-                <button class="letter-open-btn" id="open-btn" onclick="openLetter(event)">Open Letter</button>
+                <button class="letter-open-btn" id="open-btn">Open Letter</button>
                 
                 <div class="letter-content" id="letter-content">
                     
@@ -474,24 +530,80 @@
         </div>
     </section>
 
-    <!-- THE ULTIMATE FINALE (CAKE & DUAS) -->
+    <!-- THE ULTIMATE FINALE (CAKE & DUAS CROSSFADE) -->
     <section class="cake-section" id="finale-section">
         <div id="floating-duas-container"></div>
         
-        <div class="cake-content reveal" id="cake-ui">
-            <h2 class="cursive" style="font-size: 4.5rem; margin-bottom: 20px;">Make a Wish, Hassan</h2>
-            <i class="fas fa-birthday-cake" style="font-size: 8rem; color: var(--accent-gold); text-shadow: 0 0 50px rgba(212,175,55,0.8); margin: 30px 0; animation: float 3s ease-in-out infinite;"></i>
-            <br>
-            <button class="cake-btn" onclick="triggerFinale()">Cut the Cake 🔪</button>
-        </div>
+        <div class="cake-ui-container">
+            <!-- The Cake UI -->
+            <div class="cake-content" id="cake-ui">
+                <h2 class="cake-title">Make a Wish, Hassan</h2>
+                <i class="fas fa-birthday-cake" style="font-size: 8rem; color: var(--accent-gold); text-shadow: 0 0 50px rgba(212,175,55,0.8); margin: 30px 0; animation: float 3s ease-in-out infinite;"></i>
+                <br>
+                <button class="cake-btn" onclick="triggerFinale()">Cut the Cake 🔪</button>
+            </div>
 
-        <div class="dua-celebration" id="dua-celebration">
-            <h2 class="cursive" style="font-size: 5rem; color: var(--primary-pink); margin-bottom: 30px; text-shadow: 0 0 20px rgba(252, 228, 236, 0.5);">Happy 22nd Birthday</h2>
-            
-            <div class="dua-box">
-                <p>"On your birthday, I pray that Allah gives both of us the wisdom to love each other better. May He replace our fears with trust, our misunderstandings with communication, our insecurities with reassurance, and our unnecessary arguments with patience and understanding."</p>
-                <p>May Allah bless you with endless success, beautiful health, and a lifetime of happiness beside me.</p>
-                <div class="ameen">Ameen 🤲❤️</div>
+            <!-- The Dua Celebration -->
+            <div class="dua-celebration" id="dua-celebration">
+                <h2 class="dua-title">Happy 22nd Birthday</h2>
+                
+                <div class="dua-box">
+                    <p>"On your birthday, I pray that Allah gives both of us the wisdom to love each other better. May He replace our fears with trust, our misunderstandings with communication, our insecurities with reassurance, and our unnecessary arguments with patience and understanding."</p>
+                    <p>May Allah bless you with endless success, beautiful health, and a lifetime of happiness beside me.</p>
+                    <div class="ameen">Ameen 🤲❤️</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THE SECRET VAULT (LOVE COUPONS) -->
+    <section class="coupons-section">
+        <h2 class="section-title reveal">A Little Gift For You</h2>
+        <p class="reveal" style="font-size: 1.2rem; color: var(--text-light); margin-top: -30px;">Digital coupons redeemable at any time. Use them wisely! 😉</p>
+        
+        <div class="coupons-grid">
+            <div class="coupon reveal">
+                <i class="fas fa-flag-checkered"></i>
+                <h4>"You Win" Pass</h4>
+                <p>Redeem to instantly win any one argument. No questions asked. (Offer valid once! 😂)</p>
+            </div>
+            <div class="coupon reveal" style="transition-delay: 0.2s;">
+                <i class="fas fa-car-side"></i>
+                <h4>Midnight Drive</h4>
+                <p>Valid for one late-night long drive. You get to control the music the entire time.</p>
+            </div>
+            <div class="coupon reveal" style="transition-delay: 0.4s;">
+                <i class="fas fa-book-open"></i>
+                <h4>Lecture Session</h4>
+                <p>Valid for 30 minutes of uninterrupted "Life Coach" advice from you, without me acting dramatic.</p>
+            </div>
+            <div class="coupon reveal" style="transition-delay: 0.6s;">
+                <i class="fas fa-heart"></i>
+                <h4>Endless Hug</h4>
+                <p>Redeem when you've had a tough day and just need your safe space for as long as you want.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- THE NEXT CHAPTER -->
+    <section class="next-chapter-section">
+        <h2 class="cursive reveal" style="font-size: 4rem; color: var(--accent-gold);">The Next Chapter</h2>
+        <p class="reveal" style="font-size: 1.2rem; max-width: 600px; margin: 20px auto; line-height: 1.8;">
+            They say 22 is just the beginning. Our story doesn't end here, my love. I cannot wait to fill these empty frames with the rest of our lives.
+        </p>
+        
+        <div class="polaroid-container">
+            <div class="polaroid reveal">
+                <div class="polaroid-blank"><i class="fas fa-camera"></i></div>
+                <p>Waiting for us...</p>
+            </div>
+            <div class="polaroid reveal" style="transition-delay: 0.2s;">
+                <div class="polaroid-blank"><i class="fas fa-camera"></i></div>
+                <p>Future memories...</p>
+            </div>
+            <div class="polaroid reveal" style="transition-delay: 0.4s;">
+                <div class="polaroid-blank"><i class="fas fa-camera"></i></div>
+                <p>To be continued ♾️</p>
             </div>
         </div>
     </section>
@@ -694,7 +806,7 @@
         
         function updateSingleReason() {
             singleReasonText.style.animation = 'none';
-            singleReasonText.offsetHeight; // trigger reflow
+            singleReasonText.offsetHeight; 
             singleReasonText.innerHTML = `<span style="color:var(--accent-gold); font-size:2.5rem;">${currentReasonIdx + 1}.</span> ${reasonsList[currentReasonIdx]}`;
             singleReasonText.style.animation = 'popIn 0.5s ease forwards';
         }
@@ -726,32 +838,33 @@
                 document.getElementById('all-view').style.display = 'block';
             }
         }
-        updateSingleReason(); // Init first reason
+        updateSingleReason(); 
 
         // --- SECRET LETTER LOGIC ---
         function openLetter(e) {
-            e.stopPropagation();
+            if(e) e.stopPropagation();
             const envelope = document.getElementById('envelope');
+            if(envelope.classList.contains('open')) return; 
+            
             envelope.classList.add('open');
             document.getElementById('letter-title').style.display = 'none';
             document.getElementById('open-btn').style.display = 'none';
             setTimeout(() => { document.getElementById('letter-content').style.display = 'block'; }, 400);
         }
 
-        // --- THE ULTIMATE FINALE ANIMATIONS ---
+        // --- THE ULTIMATE FINALE (SMOOTH CROSSFADE) ---
         function triggerFinale() {
-            // Hide the cake button UI
-            document.getElementById('cake-ui').style.opacity = '0';
-            setTimeout(() => { document.getElementById('cake-ui').style.display = 'none'; }, 1000);
+            const cakeUI = document.getElementById('cake-ui');
+            cakeUI.style.opacity = '0';
+            cakeUI.style.pointerEvents = 'none';
             
-            // Show Dua Celebration
-            setTimeout(() => { document.getElementById('dua-celebration').style.display = 'flex'; }, 1000);
+            const duaUI = document.getElementById('dua-celebration');
+            duaUI.style.opacity = '1';
+            duaUI.style.pointerEvents = 'auto';
 
-            // Explosive Confetti
             var duration = 5 * 1000;
             var animationEnd = Date.now() + duration;
             var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
-
             function randomInRange(min, max) { return Math.random() * (max - min) + min; }
 
             var interval = setInterval(function() {
@@ -762,10 +875,8 @@
                 confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
             }, 250);
 
-            // Floating Dua Words
             const words = ['Ameen', 'Health', 'Happiness', 'Together', 'Forever', 'Success', 'Peace', 'Love'];
             const duaContainer = document.getElementById('floating-duas-container');
-            
             setInterval(() => {
                 let wordEl = document.createElement('div');
                 wordEl.className = 'floating-word';
@@ -773,7 +884,6 @@
                 wordEl.style.left = Math.random() * 80 + 10 + 'vw';
                 wordEl.style.animationDuration = (Math.random() * 5 + 10) + 's';
                 duaContainer.appendChild(wordEl);
-                
                 setTimeout(() => { wordEl.remove(); }, 15000);
             }, 800);
         }
@@ -787,7 +897,6 @@
 
         setTimeout(() => { document.querySelectorAll('.reveal').forEach(el => observer.observe(el)); }, 500);
 
-        // Auto focus first pin input
         window.onload = () => {
             let inputs = document.querySelectorAll('.pin-input');
             if(inputs.length > 0) inputs[0].focus();
