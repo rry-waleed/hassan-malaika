@@ -207,7 +207,7 @@
         .promise-card i { font-size: 2.5rem; color: var(--accent-gold); margin-bottom: 20px; }
         .promise-card h3 { font-size: 1.5rem; margin-bottom: 15px; }
 
-        /* --- VOICE MESSAGE (VM) FOR MALAIKA (NEW) --- */
+        /* --- VOICE MESSAGE (VM) FOR MALAIKA --- */
         .voice-note-section {
             padding: 100px 20px; max-width: 900px; margin: 0 auto; text-align: center;
         }
@@ -619,7 +619,7 @@
         </div>
     </section>
 
-    <!-- NEW: RECORD VOICE MESSAGE FOR MALAIKA SECTION -->
+    <!-- RECORD VOICE MESSAGE FOR MALAIKA SECTION -->
     <section class="voice-note-section reveal">
         <h2 class="section-title">Voice Capsule for Malaika</h2>
         <p style="font-size: 1.2rem; color: var(--text-light); margin-top: -30px; margin-bottom: 40px;">Leave a heart-to-heart message. Give Malaika a piece of your voice to treasure forever.</p>
@@ -839,9 +839,10 @@
             }
         }, 1000);
 
-        // --- TIMELINE LOGIC (42 Items - now includes Image 156 landmark card) ---
+        // --- TIMELINE LOGIC ---
         const memories = [
-            { src: "days_of_love.jpg", type: "img", text: "Our beautiful reality, Together Since 19/02/2023. This screenshots exactly 1337 days of loving you since our paths crossed. Your girl and her hassan, holding each other close on screen and in our lives, walking this path for over 1337 days and forever." },
+            // Safe extensions & Fallback checks ensure images never fail
+            { src: "days_of_love.png", type: "img", text: "Our beautiful reality, Together Since 19/02/2023. This screenshot captures exactly 1337 days of loving you since our paths crossed. Your girl and her hassan, holding each other close on screen and in our lives, walking this path for over 1337 days and forever." },
             { src: "photo4490643044447481730.jpg", type: "img", text: "Even when we are miles apart, the connection remains unbroken. Seeing that genuine, effortless smile on the screen while wrapped in my red hijab is a gentle reminder of how you bring light into my everyday moments." },
             { src: "photo3398039865633068396.jpg", type: "img", text: "A glimpse of the boy who first caught my attention. Standing in that grand hall, adjusting your sharp black blazer. You carry yourself with that signature charm that slowly but surely broke through my quiet, stubborn little world." },
             { src: "photo4183090709470484141.jpg", type: "img", text: "A playful pinch of your cheek while you hold a tray of beautifully decorated cupcakes. It is in these quiet, celebratory seconds that I realize just how lucky I am to have you as my partner in crime." },
@@ -852,7 +853,7 @@
             { src: "photo7108798239808714085.jpg", type: "img", text: "I wrote in my letter that I am so, so proud of you. I want to watch you achieve every single one of your dreams, and I promise to be right there celebrating your name through every victory." },
             { src: "photo3191506459883851914.jpg", type: "img", text: "Sitting comfortably in your light blue shirt, a soft smile resting on your face as you look at your screen. I love seeing you this relaxed and happy, hoping I might just be the reason behind that smile." },
             { src: "photo8033378419502565974.jpg", type: "img", text: "For all those times I act like a total drama queen, you always know exactly how to handle me. A beautifully wrapped basket filled with all my favorite snacks." },
-            { src: "photo1603940808893014562.jpg", type: "img", text: "Standing side by side, exactly where we are meant to be. We might look composed for the camera, but to me, this image captures the profound reality of us choosing each other as a team." },
+            { src: "photo1603940808893014562.jpg", type: "img", text: "Standing side by side, exactly where we are meant to be. We might look composed for the camera, but to me, this image captures the reality of us choosing each other as a team." },
             { src: "photo2262936782506242340.jpg", type: "img", text: "The boy who completely changed my world. Standing there looking effortlessly confident. Beneath that sharp exterior was the gentle, patient heart that I would eventually call my home." },
             { src: "photo4758369810982348070.jpg", type: "img", text: "Our hands gently resting together on the table. These casual, quiet moments spent together are when I realize how our lives have beautifully intertwined." },
             { src: "photo5032055950382266835.jpg", type: "img", text: "Seeing you look so incredibly sharp matches the elegance of my deep maroon gown. Looking at us dressed up like this reminds me of how I used to view you from a distance." },
@@ -890,10 +891,18 @@
             const card = document.createElement('div');
             card.className = 'memory-card reveal';
             
-            let mediaHtml = item.type === 'img' 
-                ? `<img src="${item.src}" alt="Memory" loading="lazy">` 
-                : `<video id="vid-${index}" src="${item.src}" loop playsinline autoplay muted></video>
+            let mediaHtml = '';
+            if (item.type === 'img') {
+                // If this is Card 1, it will gracefully fallback through any upload typo Hassan on GitHub
+                if (item.src === "days_of_love.png") {
+                    mediaHtml = `<img src="days_of_love.png" onerror="this.onerror=null; this.src='days_of_love.jpg'; this.onerror=function(){this.onerror=null; this.src='days_of_love.PNG'; this.onerror=function(){this.onerror=null; this.src='days_of_love.jpeg'; this.onerror=function(){this.onerror=null; this.src='image_280.png'; this.onerror=function(){this.onerror=null; this.src='image_157.png';}}}}" alt="Memory" loading="lazy">`;
+                } else {
+                    mediaHtml = `<img src="${item.src}" alt="Memory" loading="lazy">`;
+                }
+            } else {
+                mediaHtml = `<video id="vid-${index}" src="${item.src}" loop playsinline autoplay muted></video>
                    <button class="mute-btn" onclick="toggleMute('vid-${index}', this)"><i class="fas fa-volume-mute"></i></button>`;
+            }
 
             card.innerHTML = `<div class="media-container">${mediaHtml}</div><p class="memory-text">${item.text}</p>`;
             timelineContainer.appendChild(card);
@@ -928,7 +937,6 @@
             const instructions = document.getElementById('share-instructions');
 
             if (btn.classList.contains('recording')) {
-                // STOP RECORDING
                 mediaRecorder.stop();
                 btn.classList.remove('recording');
                 micIcon.className = 'fas fa-microphone';
@@ -936,7 +944,6 @@
                 status.innerText = "Processing Your Capsule...";
                 vis.style.display = 'none';
             } else {
-                // START RECORDING
                 audioChunks = [];
                 try {
                     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -952,13 +959,11 @@
                         const player = document.getElementById('audio-player');
                         player.src = audioUrl;
                         
-                        // Show playback & action options smoothly
                         playback.style.display = 'block';
                         controls.style.display = 'flex';
                         instructions.style.display = 'block';
                         status.innerText = "Voice Capsule Ready!";
                         
-                        // Stop all mic tracks to free up hardware/hardware indicators
                         stream.getTracks().forEach(track => track.stop());
                     };
 
@@ -1000,7 +1005,6 @@
             const whatsappText = encodeURIComponent(
                 "Hey Malaika! I just recorded a special, heart-to-heart voice message for you on our birthday website! Check your files/downloads to hear it! I'm sending it to you right now! ❤️🎙️📲"
             );
-            // Open whatsapp chat with Malaika
             window.open(`https://api.whatsapp.com/send?text=${whatsappText}`, '_blank');
         }
 
