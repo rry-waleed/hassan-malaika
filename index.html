@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy 22nd Birthday, Hassan</title>
-    <!-- CSS, Icon & Font Imports (Added Caveat for scrapbook handwriting) -->
+    <!-- CSS, Icon & Font Imports (Caveat for Polaroid hand-written look) -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -147,70 +147,74 @@
         .time-box span { font-size: 3rem; font-weight: bold; color: var(--accent-gold); font-family: 'Playfair Display', serif; }
         .time-box p { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px; font-weight: 600; }
 
-        /* --- PINTEREST SCRAPBOOK TIMELINE SECTION --- */
+        /* --- PINTEREST SCRAPBOOK TIMELINE SECTION (SCALED FOR EXACT 3-IN-A-ROW COLLAGE) --- */
         .section-title { text-align: center; font-size: 3.5rem; margin: 100px 0 50px 0; position: relative; }
         .section-title::after {
             content: ''; display: block; width: 80px; height: 3px;
             background: var(--accent-gold); margin: 20px auto; border-radius: 2px;
         }
 
-        /* Responsive Grid: strictly three horizontal columns on widescreen to see memories grouped (Pinterest/Polaroid board look) */
-        .timeline-section { max-width: 1240px; margin: 0 auto; padding: 0 20px; }
+        .timeline-section { 
+            max-width: 1400px; /* Expands bounds on widescreen to support large, highly-detailed 3-card layout */
+            margin: 0 auto; 
+            padding: 0 15px; 
+        }
         
+        /* Forces strictly 3-at-a-time horizontal layout on screens */
         .timeline-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 35px;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 25px;
             align-items: start;
             width: 100%;
         }
 
-        /* Polaroid Scrapbook Memory Cards */
+        /* Polaroid scrapbook-styled paper cards, packed tight horizontally */
         .memory-card {
             background: #ffffff;
-            border-radius: 4px; /* rigid paper edge */
-            box-shadow: 0 10px 32px rgba(0, 0, 0, 0.12);
-            padding: 18px 18px 35px 18px; /* Classic bottom spacing */
+            border-radius: 2px; /* straight rigid paper scissor cut */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+            padding: 15px 15px 32px 15px; /* bottom edge for handwriting */
             position: relative;
             transform-origin: center;
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.04);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
-        /* Overlapping Tape Strip Overlay */
+        /* Translucent masking tape pieces (Pinterest) overlay on each card */
         .memory-card::before {
             content: '';
             position: absolute;
-            top: -16px;
+            top: -15px;
             left: 50%;
             transform: translateX(-50%) rotate(-4deg);
-            width: 120px;
-            height: 35px;
-            background: rgba(244, 235, 211, 0.65); /* translucent adhesive paper tape */
-            border-left: 2px dashed rgba(0, 0, 0, 0.05);
-            border-right: 2px dashed rgba(0, 0, 0, 0.05);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            width: 90px;
+            height: 32px;
+            background: rgba(244, 235, 211, 0.65); /* adhesive paper strip overlay */
+            border-left: 1px dashed rgba(0, 0, 0, 0.05);
+            border-right: 1px dashed rgba(0, 0, 0, 0.05);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
             z-index: 5;
         }
 
-        /* Tape Corners */
+        /* Corner sticker overlays */
         .tape-corner {
             position: absolute;
-            top: -10px;
-            right: -10px;
-            width: 70px;
-            height: 25px;
+            top: -8px;
+            right: -8px;
+            width: 55px;
+            height: 20px;
             background: rgba(250, 240, 215, 0.5);
             transform: rotate(35deg);
             z-index: 5;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
             pointer-events: none;
         }
 
-        /* Randomized rotations applied to recreate cluttered scrapbook aesthetic */
+        /* Skews for hand-laid scrap collage board look (Pinterest aesthetic) */
         .tilt-left-sm { transform: rotate(-1.5deg); }
         .tilt-right-sm { transform: rotate(1.5deg); }
         .tilt-left-md { transform: rotate(-3deg); }
@@ -225,53 +229,53 @@
         .media-container {
             position: relative;
             width: 100%;
-            border-radius: 2px;
+            border-radius: 1px;
             overflow: hidden;
             background: #fdfdfd;
             border: 1px solid rgba(0, 0, 0, 0.08);
-            box-shadow: inset 0 2px 10px rgba(0,0,0,0.06);
+            box-shadow: inset 0 1px 6px rgba(0,0,0,0.06);
             padding: 2px;
         }
         
         .media-container img, .media-container video {
             width: 100%;
-            max-height: 50vh;
+            max-height: 42vh;
             object-fit: contain;
             display: block;
             border-radius: 1px;
         }
 
         .mute-btn {
-            position: absolute; bottom: 20px; right: 20px; background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.4);
-            color: white; width: 45px; height: 45px; border-radius: 50%;
-            cursor: pointer; z-index: 10; font-size: 1.1rem; display: flex; justify-content: center; align-items: center;
+            position: absolute; bottom: 12px; right: 12px; background: rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: white; width: 38px; height: 38px; border-radius: 50%;
+            cursor: pointer; z-index: 10; font-size: 0.95rem; display: flex; justify-content: center; align-items: center;
             transition: all 0.4s ease;
         }
-        .mute-btn:hover { background: var(--accent-gold); transform: scale(1.1); box-shadow: 0 0 20px rgba(212,175,55,0.5); }
+        .mute-btn:hover { background: var(--accent-gold); transform: scale(1.1); box-shadow: 0 0 15px rgba(212,175,55,0.5); }
 
-        /* Ink writing look */
+        /* Real handwritten-like ink footnotes below visuals */
         .memory-text {
             font-family: 'Caveat', cursive;
-            font-size: 1.45rem;
+            font-size: 1.25rem; /* tight font */
             font-weight: 400;
             line-height: 1.35;
-            color: #3b3a36; /* worn charcoal shade */
+            color: #3b3a36; /* faded ink */
             text-align: left;
-            margin-top: 20px;
-            padding: 0 5px;
+            margin-top: 15px;
+            padding: 0 2px;
             border-top: 1px dashed rgba(0, 0, 0, 0.08);
-            padding-top: 15px;
+            padding-top: 12px;
         }
 
-        /* Tiny hand-drawn visual stamp on corner bottom */
+        /* Tiny stamp visual on bottom right of the Polaroid margin */
         .memory-card::after {
             content: '♥';
             position: absolute;
-            bottom: 8px;
-            right: 15px;
+            bottom: 6px;
+            right: 12px;
             font-family: 'Great Vibes', cursive;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: #e74c3c;
             opacity: 0.5;
         }
@@ -545,7 +549,10 @@
         .polaroid p { color: #333; font-family: 'Great Vibes', cursive; font-size: 1.8rem; margin-top: 15px; }
 
         @media (max-width: 992px) {
-            .timeline-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+            /* Keeps visual clustering as close as possible to preserve collage view in mid-sized windows */
+            .timeline-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 15px; }
+            .memory-card { padding: 12px 12px 24px 12px; }
+            .memory-text { font-size: 1.15rem; margin-top: 10px; padding-top: 8px; }
         }
 
         @media (max-width: 768px) {
@@ -559,9 +566,15 @@
             #single-reason-text { font-size: 1.5rem; }
             .letter-heading { font-size: 2.2rem; }
             
-            .timeline-grid { grid-template-columns: 1fr; gap: 25px; }
-            .memory-card { padding: 14px 14px 28px 14px; margin-bottom: 0px; transform: none !important; }
-            .memory-card::before { width: 90px; height: 30px; top: -12px; }
+            /* Strictly enforces a 3-column view on all mobile viewports to meet standard triple view request */
+            .timeline-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 10px; }
+            .memory-card { padding: 6px 6px 14px 6px; transform: none !important; border-radius: 1px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+            .memory-card::before { width: 45px; height: 16px; top: -8px; }
+            .tape-corner { display: none; }
+            .media-container { padding: 1px; }
+            .memory-text { font-size: 0.75rem; margin-top: 6px; padding-top: 5px; line-height: 1.25; }
+            .memory-card::after { font-size: 0.75rem; right: 5px; bottom: 3px; }
+            .mute-btn { width: 20px; height: 20px; font-size: 0.55rem; bottom: 6px; right: 6px; }
             
             .cake-title { font-size: 3rem; }
             .dua-title { font-size: 3.2rem; margin-bottom: 15px; }
@@ -611,11 +624,11 @@
         </div>
     </section>
 
-    <!-- TIMELINE SECTION -->
+    <!-- TIMELINE SECTION (UPDATED FORCE 3-GRID SCROLLER COLLAGE) -->
     <section class="timeline-section" id="timeline">
         <h2 class="section-title reveal">Our Journey</h2>
         <div class="timeline-grid" id="timeline-container">
-            <!-- JavaScript Injects Overlapping 3-Polaroid Memories Groupings Here -->
+            <!-- JavaScript dynamically renders memories here as a horizontal collage board -->
         </div>
     </section>
 
@@ -859,7 +872,7 @@
             element.setAttribute('data-lenis-prevent', '');
         });
 
-        // --- PIN CODE LOGIC ---
+        // --- PIN CODE LOGIC (190223) ---
         function moveToNext(current, event, index) {
             if (current.value.length >= 1) {
                 let next = current.nextElementSibling;
@@ -982,14 +995,14 @@
             { src: "video4782800756343250945.mp4", type: "video", text: "A candid glimpse into our everyday life, standing together in the kitchen. It is about building a future where we share our daily lives, simply being a team in the comfort of our own home." }
         ];
 
-        // Rotation tilts applied based on the custom Pinterest collage pattern
+        // Slightly uneven skew rotations to support Pinterest scrapboard overlap visual pattern
         const tiltClasses = ['tilt-left-sm', 'tilt-right-sm', 'tilt-left-md', 'tilt-right-md'];
 
         const timelineGrid = document.getElementById('timeline-container');
         memories.forEach((item, index) => {
             const card = document.createElement('div');
             const tilt = tiltClasses[index % tiltClasses.length];
-            card.className = `memory-card reveal ${tilt}`;
+            card.className = `memory-card ${tilt}`; /* Always render visible in 3-in-a-row rows side-by-side immediately, removing intersection reveal lazy single fades */
             
             let mediaHtml = '';
             if (item.type === 'img') {
@@ -1249,7 +1262,10 @@
             });
         }, { threshold: 0.1 });
 
-        setTimeout(() => { document.querySelectorAll('.reveal').forEach(el => observer.observe(el)); }, 500);
+        setTimeout(() => { 
+            // Observe reveal animation strictly only on outer section layers to maintain original text fades, fully bypassing image card overlays
+            document.querySelectorAll('.reveal:not(.memory-card)').forEach(el => observer.observe(el)); 
+        }, 500);
 
         window.onload = () => {
             let inputs = document.querySelectorAll('.pin-input');
