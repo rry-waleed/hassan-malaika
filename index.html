@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy 22nd Birthday, Hassan</title>
-    <!-- CSS & Icon Imports -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <!-- CSS, Icon & Font Imports (Added Caveat for scrapbook handwriting) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- External Animation/Sound libraries -->
@@ -147,44 +147,133 @@
         .time-box span { font-size: 3rem; font-weight: bold; color: var(--accent-gold); font-family: 'Playfair Display', serif; }
         .time-box p { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px; font-weight: 600; }
 
-        /* --- TIMELINE SECTION --- */
+        /* --- PINTEREST SCRAPBOOK TIMELINE SECTION (Updated) --- */
         .section-title { text-align: center; font-size: 3.5rem; margin: 100px 0 50px 0; position: relative; }
         .section-title::after {
             content: ''; display: block; width: 80px; height: 3px;
             background: var(--accent-gold); margin: 20px auto; border-radius: 2px;
         }
 
-        .timeline-section { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
-
-        .memory-card {
-            background: var(--glass-bg); border-radius: 30px; padding: 30px; margin-bottom: 60px;
-            border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); backdrop-filter: blur(10px);
-            transition: all 0.5s ease; position: relative; overflow: hidden;
+        /* Pinterest-inspired Cascading Scrapbook Grid Layout */
+        .timeline-section { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        .timeline-grid {
+            column-count: 3;
+            column-gap: 30px;
+            width: 100%;
         }
+
+        /* Polaroid Scrapbook Memory Cards */
+        .memory-card {
+            background: #ffffff;
+            border-radius: 4px; /* classic hand-cut rigid paper look */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            padding: 18px 18px 35px 18px; /* Polaroid thick bottom margin */
+            margin-bottom: 40px;
+            break-inside: avoid;
+            display: inline-block;
+            width: 100%;
+            position: relative;
+            transform-origin: center;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Overlapping Tapes (Pinterest tape scrap) */
+        .memory-card::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-4deg);
+            width: 110px;
+            height: 35px;
+            background: rgba(244, 235, 211, 0.65); /* Translucent Masking Tape */
+            border-left: 2px dashed rgba(0, 0, 0, 0.05);
+            border-right: 2px dashed rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            z-index: 5;
+        }
+
+        /* Corner/Skew Tapes (Pinterest visual layered edge) */
+        .tape-corner {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 70px;
+            height: 25px;
+            background: rgba(250, 240, 215, 0.5);
+            transform: rotate(35deg);
+            z-index: 5;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+            pointer-events: none;
+        }
+
+        /* Randomized tilts class applied dynamically & statically */
+        .tilt-left-sm { transform: rotate(-1.5deg); }
+        .tilt-right-sm { transform: rotate(1.5deg); }
+        .tilt-left-md { transform: rotate(-3deg); }
+        .tilt-right-md { transform: rotate(3deg); }
+
         .memory-card:hover {
-            transform: translateY(-10px); box-shadow: 0 20px 50px rgba(31, 38, 135, 0.15); border-color: rgba(255,255,255,1);
+            transform: scale(1.03) rotate(0deg) !important;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
+            z-index: 20;
         }
 
         .media-container {
-            position: relative; width: 100%; border-radius: 20px; overflow: hidden;
-            background: rgba(0,0,0,0.03); display: flex; justify-content: center; align-items: center;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+            position: relative;
+            width: 100%;
+            border-radius: 2px;
+            overflow: hidden;
+            background: #fdfdfd;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.06);
+            padding: 2px;
         }
+        
         .media-container img, .media-container video {
-            width: 100%; max-height: 75vh; object-fit: contain; display: block; transition: transform 0.7s ease;
+            width: 100%;
+            max-height: 50vh;
+            object-fit: contain;
+            display: block;
+            border-radius: 1px;
         }
-        .memory-card:hover .media-container img, .memory-card:hover .media-container video { transform: scale(1.02); }
 
         .mute-btn {
-            position: absolute; bottom: 20px; right: 20px; background: rgba(255,255,255,0.2);
+            position: absolute; bottom: 20px; right: 20px; background: rgba(0,0,0,0.5);
             backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.4);
-            color: white; width: 50px; height: 50px; border-radius: 50%;
-            cursor: pointer; z-index: 10; font-size: 1.2rem; display: flex; justify-content: center; align-items: center;
+            color: white; width: 45px; height: 45px; border-radius: 50%;
+            cursor: pointer; z-index: 10; font-size: 1.1rem; display: flex; justify-content: center; align-items: center;
             transition: all 0.4s ease;
         }
         .mute-btn:hover { background: var(--accent-gold); transform: scale(1.1); box-shadow: 0 0 20px rgba(212,175,55,0.5); }
 
-        .memory-text { font-size: 1.15rem; line-height: 1.9; color: var(--text-dark); text-align: justify; margin-top: 25px; padding: 0 10px; }
+        /* Polaroid bottom handwriting */
+        .memory-text {
+            font-family: 'Caveat', cursive;
+            font-size: 1.45rem;
+            font-weight: 400;
+            line-height: 1.35;
+            color: #3b3a36; /* aged ink */
+            text-align: left;
+            margin-top: 20px;
+            padding: 0 5px;
+            border-top: 1px dashed rgba(0, 0, 0, 0.08);
+            padding-top: 15px;
+        }
+
+        /* Aesthetic little pencil heart graphic on bottom right */
+        .memory-card::after {
+            content: '♥';
+            position: absolute;
+            bottom: 8px;
+            right: 15px;
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.5rem;
+            color: #e74c3c;
+            opacity: 0.5;
+        }
 
         /* --- ROMANTIC PROMISES SECTION --- */
         .promises-section {
@@ -249,7 +338,6 @@
             background: var(--accent-gold); width: 4px; height: 100%; border-radius: 3px;
             animation: bounceWave 1s ease-in-out infinite alternate;
         }
-        /* Randomized delays for bounceWave simulate actual real-time audio behavior */
         .waveform-bar:nth-child(even) { animation-delay: 0.1s; }
         .waveform-bar:nth-child(odd) { animation-delay: 0.3s; }
         .waveform-bar:nth-child(3n) { animation-delay: 0.5s; }
@@ -455,6 +543,10 @@
         .polaroid-blank i { font-size: 3rem; color: #ccc; }
         .polaroid p { color: #333; font-family: 'Great Vibes', cursive; font-size: 1.8rem; margin-top: 15px; }
 
+        @media (max-width: 992px) {
+            .timeline-grid { column-count: 2; }
+        }
+
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
             .hero .subtitle { font-size: 2rem; }
@@ -465,6 +557,10 @@
             .reasons-controls { flex-direction: column; gap: 10px; }
             #single-reason-text { font-size: 1.5rem; }
             .letter-heading { font-size: 2.2rem; }
+            
+            .timeline-grid { column-count: 1; }
+            .memory-card { padding: 14px 14px 28px 14px; margin-bottom: 30px; transform: none !important; }
+            .memory-card::before { width: 90px; height: 30px; top: -12px; }
             
             .cake-title { font-size: 3rem; }
             .dua-title { font-size: 3.2rem; margin-bottom: 15px; }
@@ -517,8 +613,8 @@
     <!-- TIMELINE SECTION -->
     <section class="timeline-section" id="timeline">
         <h2 class="section-title reveal">Our Journey</h2>
-        <div id="timeline-container">
-            <!-- JavaScript Injects Memories Here -->
+        <div class="timeline-grid" id="timeline-container">
+            <!-- JavaScript Injects Overlapping Polaroid Memories Here -->
         </div>
     </section>
 
@@ -762,7 +858,7 @@
             element.setAttribute('data-lenis-prevent', '');
         });
 
-        // --- PIN CODE LOGIC (192023) ---
+        // --- PIN CODE LOGIC Updated to exact target Day/Month/Year: (190223) ---
         function moveToNext(current, event, index) {
             if (current.value.length >= 1) {
                 let next = current.nextElementSibling;
@@ -785,7 +881,7 @@
             let pin = "";
             inputs.forEach(input => pin += input.value);
             
-            if (pin === "192023") {
+            if (pin === "190223") {
                 document.getElementById('lock-screen').style.opacity = '0';
                 setTimeout(() => { document.getElementById('lock-screen').style.visibility = 'hidden'; }, 1000);
             } else if (pin.length === 6) {
@@ -841,8 +937,7 @@
 
         // --- TIMELINE LOGIC ---
         const memories = [
-            // Safe extensions & Fallback checks ensure images never fail
-            { src: "days_of_love.png", type: "img", text: "Our beautiful reality, Together Since 19/02/2023. This screenshot captures exactly 1337 days of loving you since our paths crossed. Your girl and her hassan, holding each other close on screen and in our lives, walking this path for over 1337 days and forever." },
+            { src: "days_of_love.jpg.jpeg", type: "img", text: "Our beautiful reality, Together Since 19/02/2023. This screenshot captures exactly 1337 days of loving you since our paths crossed. Your girl and her hassan, holding each other close on screen and in our lives, walking this path for over 1337 days and forever." },
             { src: "photo4490643044447481730.jpg", type: "img", text: "Even when we are miles apart, the connection remains unbroken. Seeing that genuine, effortless smile on the screen while wrapped in my red hijab is a gentle reminder of how you bring light into my everyday moments." },
             { src: "photo3398039865633068396.jpg", type: "img", text: "A glimpse of the boy who first caught my attention. Standing in that grand hall, adjusting your sharp black blazer. You carry yourself with that signature charm that slowly but surely broke through my quiet, stubborn little world." },
             { src: "photo4183090709470484141.jpg", type: "img", text: "A playful pinch of your cheek while you hold a tray of beautifully decorated cupcakes. It is in these quiet, celebratory seconds that I realize just how lucky I am to have you as my partner in crime." },
@@ -886,16 +981,20 @@
             { src: "video4782800756343250945.mp4", type: "video", text: "A candid glimpse into our everyday life, standing together in the kitchen. It is about building a future where we share our daily lives, simply being a team in the comfort of our own home." }
         ];
 
-        const timelineContainer = document.getElementById('timeline-container');
+        // Slight randomized rotation values used dynamically to simulate overlapping hand-cut layouts seen in Pinterest boards.
+        const tiltClasses = ['tilt-left-sm', 'tilt-right-sm', 'tilt-left-md', 'tilt-right-md'];
+
+        const timelineGrid = document.getElementById('timeline-container');
         memories.forEach((item, index) => {
             const card = document.createElement('div');
-            card.className = 'memory-card reveal';
+            // Assign varying slight rotation dynamically
+            const tilt = tiltClasses[index % tiltClasses.length];
+            card.className = `memory-card reveal ${tilt}`;
             
             let mediaHtml = '';
             if (item.type === 'img') {
-                // If this is Card 1, it will gracefully fallback through any upload typo Hassan on GitHub
-                if (item.src === "days_of_love.png") {
-                    mediaHtml = `<img src="days_of_love.png" onerror="this.onerror=null; this.src='days_of_love.jpg'; this.onerror=function(){this.onerror=null; this.src='days_of_love.PNG'; this.onerror=function(){this.onerror=null; this.src='days_of_love.jpeg'; this.onerror=function(){this.onerror=null; this.src='image_280.png'; this.onerror=function(){this.onerror=null; this.src='image_157.png';}}}}" alt="Memory" loading="lazy">`;
+                if (item.src === "days_of_love.jpg.jpeg") {
+                    mediaHtml = `<img src="days_of_love.jpg.jpeg" onerror="this.onerror=null; this.src='days_of_love.jpg'; this.onerror=function(){this.onerror=null; this.src='days_of_love.png'; this.onerror=function(){this.onerror=null; this.src='days_of_love.PNG'; this.onerror=function(){this.onerror=null; this.src='days_of_love.jpeg'; this.onerror=function(){this.onerror=null; this.src='image_280.png'; this.onerror=function(){this.onerror=null; this.src='image_157.png';}}}}}" alt="Memory" loading="lazy">`;
                 } else {
                     mediaHtml = `<img src="${item.src}" alt="Memory" loading="lazy">`;
                 }
@@ -904,8 +1003,12 @@
                    <button class="mute-btn" onclick="toggleMute('vid-${index}', this)"><i class="fas fa-volume-mute"></i></button>`;
             }
 
-            card.innerHTML = `<div class="media-container">${mediaHtml}</div><p class="memory-text">${item.text}</p>`;
-            timelineContainer.appendChild(card);
+            card.innerHTML = `
+                <div class="tape-corner"></div>
+                <div class="media-container">${mediaHtml}</div>
+                <p class="memory-text">${item.text}</p>
+            `;
+            timelineGrid.appendChild(card);
         });
 
         function toggleMute(vidId, btn) {
